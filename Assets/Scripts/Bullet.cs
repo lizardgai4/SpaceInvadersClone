@@ -6,7 +6,6 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
   private Rigidbody2D myRigidbody2D;
-    //public GameObject UI;
 
   public float speed = 5;
     // Start is called before the first frame update
@@ -20,19 +19,6 @@ public class Bullet : MonoBehaviour
     private void Fire()
     {
       myRigidbody2D.velocity = Vector2.up * speed; 
-      //Debug.Log("Wwweeeeee");
-    }
-
-    private void OnCollisionEnster(Collision collision)
-    {
-        //Debug.Log("Crash");
-        //var selectionRenderer = transform.GetComponent<Renderer>();
-        if (collision.gameObject.name.StartsWith("Enemy") || collision.gameObject.name.StartsWith("Barricade"))
-        {
-            //GameObject.Find("UI").GetComponent<UIScript>().scorePoints(100, 0);
-            //Debug.Log("Block destroyed");
-            Destroy(collision.gameObject);
-            return;
-        }
+      Debug.Log("Wwweeeeee");
     }
 }
