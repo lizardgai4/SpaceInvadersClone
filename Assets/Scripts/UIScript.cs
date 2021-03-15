@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIScript : MonoBehaviour
 {
@@ -44,5 +45,9 @@ public class UIScript : MonoBehaviour
             UIHighScore.text = "Hi-Score\n" + String.Format("{0:0000}", highScore);
         }
         score = 0;
+    }
+
+    public int getScore() {
+        return score;
     }
 }

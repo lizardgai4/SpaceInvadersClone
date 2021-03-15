@@ -18,7 +18,10 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     private void Fire()
     {
-      myRigidbody2D.velocity = Vector2.up * speed; 
-      Debug.Log("Wwweeeeee");
+        myRigidbody2D.velocity = Vector2.up * speed; 
+      //Debug.Log("Wwweeeeee");
+    }
+    void OnCollisionEnter2D(Collision2D collision) {
+        Destroy(this.gameObject);
     }
 }

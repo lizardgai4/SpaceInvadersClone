@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 //using "Enemy.cs";
+using UnityEngine.SceneManagement;
 
 public class StartGame : MonoBehaviour
 {
@@ -164,10 +165,11 @@ public class StartGame : MonoBehaviour
     public void decrementEnemies() {
         //currentEnemyCount--;
         if (--currentEnemyCount == 0) { //game ends in a win
-            new WaitForSeconds(1f);
+            SceneManager.LoadScene("Credits");
             currentEnemyCount = NUMBER_OF_ENEMIES;
-            RefreshParse();
-            GameObject.Find("UI").GetComponent<UIScript>().resetGame();
+            /*RefreshParse();
+            GameObject.Find("UI").GetComponent<UIScript>().resetGame();*/
+            GetComponent<WaitFiveSeconds>().updateScore(GetComponent<UIScript>().getScore());
         }
         //Debug.Log(currentEnemyCount);
     }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    private Animator animator;
     public static int direction = 1;
     public static float speed = 0.1f;
     public bool gunship = false;
@@ -11,6 +12,7 @@ public class Enemy : MonoBehaviour
     //public GameObject UI;
     private float fireRate = 5f;
     private float fireTimer = 0f;
+    private bool hit = false;
 
     public GameObject bullet;
     public Transform shottingOffset;
@@ -18,32 +20,43 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void OnCollisionEnter2D(Collision2D collision)
     {
-        //Debug.Log("Tot!");
-        //switch(this.gameObject.name)
-        if (this.gameObject.name.StartsWith("Enemy1"))
-        {
-            GameObject.Find("UI").GetComponent<UIScript>().scorePoints(10, 0);
-        }
-        else if (this.gameObject.name.StartsWith("Enemy2"))
-        {
-            GameObject.Find("UI").GetComponent<UIScript>().scorePoints(20, 0);
-        }
-        else if (this.gameObject.name.StartsWith("Enemy3"))
-        {
-            GameObject.Find("UI").GetComponent<UIScript>().scorePoints(30, 0);
-        }
-        else if (this.gameObject.name.StartsWith("Enemy4"))
-        {
-            GameObject.Find("UI").GetComponent<UIScript>().scorePoints(40, 0);
-        }
+        if (!hit) {
+            hit = true;
+            //Debug.Log("Tot!");
+            //switch(this.gameObject.name)
+            if (this.gameObject.name.StartsWith("Enemy1"))
+            {
+                animator.Play("Enemy1Death");
+                GameObject.Find("UI").GetComponent<UIScript>().scorePoints(10, 0);
+            }
+            else if (this.gameObject.name.StartsWith("Enemy2"))
+            {
+                animator.Play("Enemy2Death");
+                GameObject.Find("UI").GetComponent<UIScript>().scorePoints(20, 0);
+            }
+            else if (this.gameObject.name.StartsWith("Enemy3"))
+            {
+                animator.Play("Enemy3Death");
+                GameObject.Find("UI").GetComponent<UIScript>().scorePoints(30, 0);
+            }
+            else if (this.gameObject.name.StartsWith("Enemy4"))
+            {
+                animator.Play("Enemy4Death");
+                GameObject.Find("UI").GetComponent<UIScript>().scorePoints(40, 0);
+            }
 
-        GameObject.Find("Level").GetComponent<StartGame>().decrementEnemies();
+            GameObject.Find("Level").GetComponent<StartGame>().decrementEnemies();
 
-        //Debug.Log("Block destroyed");
-        Destroy(collision.gameObject);
-        Destroy(this.gameObject);
+            //Debug.Log("Block destroyed");
+
+            Destroy(collision.gameObject);
+        }
     }
 
+    public void Die()
+    {
+        Destroy(this.gameObject);
+    }
     public void down()
     {
         transform.Translate(transform.up * -1); ;
@@ -70,6 +83,7 @@ public class Enemy : MonoBehaviour
             }
             else
             {
+                animator.Play("Enemy1Fire");
                 canFire = false;
                 GameObject shot = Instantiate(bullet, shottingOffset.position, Quaternion.identity);
                 //shot.speed = -5;
@@ -91,5 +105,10 @@ public class Enemy : MonoBehaviour
             GameObject.Find("Level").GetComponent<StartGame>().LowerAllEnemies();
             //new WaitForSeconds(2f);
         }
+    }
+
+    void Awake()
+    {
+        animator = GetComponent<Animator>();
     }
 }
